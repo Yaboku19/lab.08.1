@@ -6,8 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -15,7 +13,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -31,7 +28,7 @@ public class BadIOGUI {
     private static final String PATH = System.getProperty("user.home")
             + File.separator
             + BadIOGUI.class.getSimpleName() + ".txt";
-    private static final int PROPORTION = 5;
+    //private static final int PROPORTION = 5;
     private final Random randomGenerator = new Random();
     private final JFrame frame = new JFrame(TITLE);
 
@@ -42,12 +39,35 @@ public class BadIOGUI {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
         final JButton write = new JButton("Write on file");
-        canvas.add(write, BorderLayout.CENTER);
-        frame.setContentPane(canvas);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //canvas.add(write, BorderLayout.CENTER);
+        /*
+         * part 1
+         */
+        final JPanel aPanel = new JPanel();
+        aPanel.setLayout(new BoxLayout(aPanel, BoxLayout.X_AXIS));
+        canvas.add(aPanel, BorderLayout.CENTER);
+        aPanel.add(write);
+        /*
+         * part 2
+         */
+        final JButton read = new JButton("Read file");
+        aPanel.add(read);
+        read.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final File file = new File(PATH);
+                try {
+                    System.out.println(Files.readAllLines(file.toPath()));  // NOPMD: allowed as this is just an exercise
+                } catch (IOException e1) {
+                    e1.printStackTrace();   // NOPMD: allowed as this is just an exercise
+                }
+            }
+        });
         /*
          * Handlers
          */
+        frame.setContentPane(canvas);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -77,10 +97,11 @@ public class BadIOGUI {
          * issue). It is MUCH better than manually specify the size of a window
          * in pixel: it takes into account the current resolution.
          */
-        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        /*final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
-        frame.setSize(sw / PROPORTION, sh / PROPORTION);
+        frame.setSize(sw / PROPORTION, sh / PROPORTION);*/
+        frame.pack();
         /*
          * Instead of appearing at (0,0), upper left corner of the screen, this
          * flag makes the OS window manager take care of the default positioning
