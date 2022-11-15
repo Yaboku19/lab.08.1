@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,7 +15,7 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Random;
-
+import java.awt.Toolkit;
 /**
  * This class is a simple application that writes a random number on a file.
  * 
@@ -28,7 +29,7 @@ public class BadIOGUI {
     private static final String PATH = System.getProperty("user.home")
             + File.separator
             + BadIOGUI.class.getSimpleName() + ".txt";
-    //private static final int PROPORTION = 5;
+    private static final int PROPORTION = 5;
     private final Random randomGenerator = new Random();
     private final JFrame frame = new JFrame(TITLE);
 
@@ -48,7 +49,7 @@ public class BadIOGUI {
         canvas.add(aPanel, BorderLayout.CENTER);
         aPanel.add(write);
         /*
-         * part 2
+         * part 2, 3
          */
         final JButton read = new JButton("Read file");
         aPanel.add(read);
@@ -97,10 +98,10 @@ public class BadIOGUI {
          * issue). It is MUCH better than manually specify the size of a window
          * in pixel: it takes into account the current resolution.
          */
-        /*final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
-        frame.setSize(sw / PROPORTION, sh / PROPORTION);*/
+        frame.setSize(sw / PROPORTION, sh / PROPORTION);
         frame.pack();
         /*
          * Instead of appearing at (0,0), upper left corner of the screen, this
