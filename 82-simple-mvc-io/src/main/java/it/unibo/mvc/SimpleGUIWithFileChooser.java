@@ -33,9 +33,6 @@ public final class SimpleGUIWithFileChooser {
      * @param ctrl Controller
      */
     public SimpleGUIWithFileChooser(final Controller ctrl) {
-        // file di testo
-        final var textArea = new JTextArea();
-        textArea.setRows(4);
         // main panel
         final var cansas = new JPanel(new BorderLayout());
         // button save
@@ -44,6 +41,9 @@ public final class SimpleGUIWithFileChooser {
         final var southPanel = new JPanel(new BorderLayout());
         // panel for the configuration of the souther panel
         final var souther = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        // file di testo
+        final var textArea = new JTextArea();
+        textArea.setRows(4);
         // add parts as SimpleGUI
         souther.add(saveButton);
         southPanel.add(textArea, BorderLayout.NORTH);

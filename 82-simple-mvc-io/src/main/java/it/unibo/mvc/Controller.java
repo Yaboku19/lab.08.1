@@ -17,7 +17,7 @@ public class Controller {
      */
     public Controller() {
         final String path = System.getProperty("user.home") + File.separator + "output.txt";
-        this.courrentFile = new File(courrentFile, path);
+        this.courrentFile = new File(path);
     }
 
     /**
@@ -51,7 +51,8 @@ public class Controller {
      */
     public void writeString(final String row) throws IOException {
         Objects.requireNonNull(row);
-        final PrintStream ps = new PrintStream(this.getString(), StandardCharsets.UTF_8);
-        ps.print(row);
+        try (PrintStream ps = new PrintStream(this.getString(), StandardCharsets.UTF_8)) {
+            ps.print(row);
+        }
     }
 }
