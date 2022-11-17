@@ -47,7 +47,8 @@ public class Controller {
 
     /**
      * write a string on the courrent file.
-     * @param  row String to be writed
+     * @param row the string that has to be written
+     * @throws IOException Input output exception
      */
     public void writeString(final String row) throws IOException {
         Objects.requireNonNull(row);
