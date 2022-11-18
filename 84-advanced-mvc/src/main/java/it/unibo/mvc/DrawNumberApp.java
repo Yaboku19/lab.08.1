@@ -1,18 +1,22 @@
 package it.unibo.mvc;
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
+import org.yaml.snakeyaml.Yaml;
 
 /**
  */
 public final class DrawNumberApp implements DrawNumberViewObserver {
-    private static final int MIN = 0;
-    private static final int MAX = 100;
-    private static final int ATTEMPTS = 10;
-
+    private static final String NAME_FILE = "config.yml";
     private final DrawNumber model;
     private final List<DrawNumberView> views;
+    private static final String MIN_key = "minimum";
+    private static final String MAX_key = "maximum";
+    private static final String ATTEMPS_key = "attempts";
 
     /**
      * @param views
@@ -27,7 +31,11 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
             view.setObserver(this);
             view.start();
         }
-        this.model = new DrawNumberImpl(MIN, MAX, ATTEMPTS);
+        Yaml yaml = new Yaml();
+        InputStream file = ClassLoader.getSystemClassLoader().getResourceAsStream(NAME_FILE);
+        Map<String, Integer> allFile =(Map<String, Integer>) yaml.load(file);
+        //BufferedReader reader = new BufferedReader(new FileReader());
+        this.model = new DrawNumberImpl(allFile.get(MIN_key), allFile.get(MAX_key), allFile.get(ATTEMPS_key));
     }
 
     @Override
@@ -66,7 +74,7 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
      * @throws FileNotFoundException 
      */
     public static void main(final String... args) throws FileNotFoundException {
-        new DrawNumberApp(new DrawNumberViewImpl());
+        new DrawNumberApp(new DrawNumberViewImpl(), new DrawNumberViewImpl());
     }
 
 }
